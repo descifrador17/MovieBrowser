@@ -1,8 +1,9 @@
 # Initial Commit
 
-This is an app that allows the user to browse through the latest movies![This shows the basic layout of the app](https://drive.google.com/file/d/13eHdPcUXsZMYgjBXlk9NMByhjUTZS6Au/view?usp=sharing)
+This is an app that allows the user to browse through the latest movies
+[This shows the basic layout of the app](https://drive.google.com/file/d/13eHdPcUXsZMYgjBXlk9NMByhjUTZS6Au/view?usp=sharing)
 
-![This is The Movie Details Layout](https://drive.google.com/file/d/1PU_a8_s-M_7UzPANAsudOV2rwZWdvI-t/view?usp=sharing)
+[This is The Movie Details Layout](https://drive.google.com/file/d/1PU_a8_s-M_7UzPANAsudOV2rwZWdvI-t/view?usp=sharing)
 
 [The MovieDB](https://www.themoviedb.org/) API was used to gather all the information
 # Prerequisites
@@ -51,10 +52,10 @@ HTTP is the way modern applications network. It’s how we exchange data & media
 3. GSON to parse data received from the [website](https://www.themoviedb.org/)
 
 ## Setting Up the App
- ![Create a folder named util and Kotlin file Constants.kt](https://imgur.com/hFKtw80)
+ [Create a folder named util and Kotlin file Constants.kt](https://imgur.com/hFKtw80)
  It will keep your API Key and Base URL for the App
  
- ![Enter your generated API Key at the place shown in the picture](https://imgur.com/T11DTuV)
+ [Enter your generated API Key at the place shown in the picture](https://imgur.com/T11DTuV)
  
  Run...
 
