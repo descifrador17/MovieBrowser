@@ -2,7 +2,8 @@ package com.descifrador.moviebrowser.network
 
 data class MovieListData(
     val results: List<Result>,
-    val total_pages : Int
+    val total_pages : Int,
+    val page : Int
 )
 
 data class Result(
