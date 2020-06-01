@@ -20,6 +20,20 @@
         android:textColor="#FFFFFF"
         android:textSize="20sp" />
 
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_alignEnd="@+id/title"
+        android:layout_marginStart="51dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginEnd="52dp"
+        android:text="TextView"
+        android:textColor="#FFFFFF"
+        android:visibility="invisible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

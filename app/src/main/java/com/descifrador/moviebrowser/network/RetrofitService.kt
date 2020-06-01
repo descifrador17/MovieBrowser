@@ -7,7 +7,7 @@ import retrofit2.http.Query
 
 interface RetrofitService {
 
-    @GET("/3/movie/upcoming")
+    @GET("/3/movie/popular")
     fun getMovies(@Query("api_key") key: String,@Query("page")page:Int): Observable<MovieListData>
 
     @GET("/3/movie/{movie_id}")
