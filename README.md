@@ -59,3 +59,6 @@ HTTP is the way modern applications network. It’s how we exchange data & media
  
  Run...
 
+## Update_1
+Paginating added - user can now browse all the movies from the source
+
