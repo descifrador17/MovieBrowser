@@ -7,8 +7,8 @@ import retrofit2.http.Query
 
 interface RetrofitService {
 
-    @GET("/3/movie/popular")
-    fun getMovies(@Query("api_key") key: String,@Query("page")page:Int): Observable<MovieListData>
+    @GET("/3/movie/{search}")
+    fun getMovies(@Path("search") search : String,@Query("api_key") key: String, @Query("page")page:Int): Observable<MovieListData>
 
     @GET("/3/movie/{movie_id}")
     fun getMovieDetails(@Path("movie_id") id : Int,@Query("api_key") key: String) : Observable<MovieData>

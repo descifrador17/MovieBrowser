@@ -26,6 +26,10 @@ import kotlinx.android.synthetic.main.custom_titlebar.*
 var CURRENT_PAGE = 1
 
 class Pages : AppCompatActivity() {
+
+    lateinit var search : String
+    lateinit var title_page : String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pages)
@@ -35,18 +39,31 @@ class Pages : AppCompatActivity() {
         titleView.text = "UPCOMING"
 
         val page = intent.getIntExtra("page",1)
+        search = intent.getStringExtra("search")!!
+        title_page = intent.getStringExtra("title")!!
+
+        titleView.text = title_page
 
         settingupcall(page)
 
         forward.setOnClickListener{
             val intent = Intent(this,Pages::class.java)
             intent.putExtra("page", CURRENT_PAGE+1)
+            intent.putExtra("search", search)
+            intent.putExtra("title", title_page)
             this.startActivity(intent)
         }
 
         backward.setOnClickListener {
             val intent = Intent(this,Pages::class.java)
             intent.putExtra("page", CURRENT_PAGE-1)
+            intent.putExtra("search", search)
+            intent.putExtra("title", title_page)
+            this.startActivity(intent)
+        }
+
+        homeButtonView.setOnClickListener {
+            val intent = Intent(this,MainActivity::class.java)
             this.startActivity(intent)
         }
     }
@@ -75,6 +92,8 @@ class Pages : AppCompatActivity() {
             forward.visibility = View.VISIBLE
         if(response.page >1)
             backward.visibility = View.VISIBLE
+        if(response.page == response.total_pages)
+            forward.visibility = View.GONE
 
         progress_bar.visibility = View.GONE
 
@@ -93,7 +112,7 @@ class Pages : AppCompatActivity() {
         Log.e("Main SettingCall Inside", page.toString())
         compositeDisposable.add(
             ServiceBuilder.buildService()
-                .getMovies(api_key, page)
+                .getMovies(search,api_key, page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({response -> onResponse(response)}, {t -> onFailure(t) }))
