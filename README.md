@@ -59,6 +59,15 @@ HTTP is the way modern applications network. It’s how we exchange data & media
  
  Run...
 
-## Update_1
+## Update_1 (1 June 2020)
 Paginating added - user can now browse all the movies from the source
+
+## Update_2 (2 June 2020)
+New Categories Added - Now user can browse
+ 1. Popular Movies
+ 2. Upcoming Movies
+ 3. Movies in theaters
+ 4. Top Rated Movies
+
+Added Home Button to browsing pages
 
