@@ -50,6 +50,7 @@ class MoviesViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
         when (movie.overview) {
             "" -> overview.visibility = View.GONE
             else -> overview.text = movie.overview
+
         }
 
         when (movie.vote_average) {

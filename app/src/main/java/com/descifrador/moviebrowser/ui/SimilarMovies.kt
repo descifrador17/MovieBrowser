@@ -21,39 +21,37 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_pages.*
 import kotlinx.android.synthetic.main.custom_titlebar.*
 
-private var movie_name : String? = "NONE"
+private var movie_id = 0
 private var CURRENT_PAGE = 1
 
-class SearchResults : AppCompatActivity() {
+
+class SimilarMovies : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_results)
+        setContentView(R.layout.activity_similar_movies)
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setCustomView(R.layout.custom_titlebar)
 
-        titleView.text = "Search Results"
+        titleView.text = "Similar Movies"
 
-        movie_name = intent.getStringExtra("search_query")
+        movie_id = intent.getIntExtra("movieID",0)
+
         val page = intent.getIntExtra("page",1)
-        Log.e("Main", movie_name)
 
-        if(movie_name == "NONE")
-            Toast.makeText(this,"No Search found",Toast.LENGTH_SHORT).show()
-        else
-            settingupcall(page)
+        settingupcall(page)
 
 
         forward.setOnClickListener{
-            val intent = Intent(this,SearchResults::class.java)
+            val intent = Intent(this,SimilarMovies::class.java)
             intent.putExtra("page", CURRENT_PAGE+1)
-            intent.putExtra("search_query", movie_name)
+            intent.putExtra("movieID", movie_id)
             this.startActivity(intent)
         }
 
         backward.setOnClickListener {
-            val intent = Intent(this,SearchResults::class.java)
+            val intent = Intent(this,SimilarMovies::class.java)
             intent.putExtra("page", CURRENT_PAGE-1)
-            intent.putExtra("search_query", movie_name)
+            intent.putExtra("movieID", movie_id)
             this.startActivity(intent)
         }
 
@@ -95,7 +93,7 @@ class SearchResults : AppCompatActivity() {
 
         recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@SearchResults)
+            layoutManager = LinearLayoutManager(this@SimilarMovies)
             adapter = MoviesAdapter(response.results, response.total_pages)
             (adapter as MoviesAdapter).notifyDataSetChanged()
             Log.e("Main", response.page.toString() + " " + response.total_pages.toString())
@@ -108,7 +106,7 @@ class SearchResults : AppCompatActivity() {
         Log.e("Main SettingCall Inside", page.toString())
         compositeDisposable.add(
             ServiceBuilder.buildService()
-                .getSearchResults(api_key, movie_name!!, page)
+                .getSimilarResults(movie_id,api_key, page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({response -> onResponse(response)}, {t -> onFailure(t) }))

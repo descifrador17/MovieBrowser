@@ -16,5 +16,7 @@ interface RetrofitService {
     @GET("/3/search/movie")
     fun getSearchResults(@Query("api_key") key : String,@Query("query") movie_name : String,@Query("page") page : Int) : Observable<MovieListData>
 
+    @GET("/3/movie/{movie_id}/similar")
+    fun getSimilarResults(@Path("movie_id") id : Int,@Query("api_key") key : String,@Query("page") page : Int) : Observable<MovieListData>
 
 }
