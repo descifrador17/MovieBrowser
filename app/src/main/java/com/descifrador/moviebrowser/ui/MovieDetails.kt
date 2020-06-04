@@ -47,7 +47,9 @@ class MovieDetails : AppCompatActivity() {
     private fun onResponse(response: MovieData) {
         progressmoviedetails.visibility = View.GONE
 
+
         movieTitleView.text = response.title
+        title = response.title
 
         when{
             response.posterPath == "null" -> movieImageView.visibility = GONE
@@ -72,7 +74,7 @@ class MovieDetails : AppCompatActivity() {
 
         when(response.runtime){
             0 -> runtimeView.visibility = GONE
-            else -> runtimeView.text = "Runtime : ${response.runtime/60} hr ${response.runtime%60} sec"
+            else -> runtimeView.text = "Runtime : ${response.runtime/60} hr ${response.runtime%60} min"
         }
 
         when(response.budget){

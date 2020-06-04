@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
-import android.widget.CursorAdapter
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -23,41 +21,39 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_pages.*
 import kotlinx.android.synthetic.main.custom_titlebar.*
 
+var movie_name : String? = "NONE"
 private var CURRENT_PAGE = 1
 
-class Pages : AppCompatActivity() {
-
-    lateinit var search : String
-    lateinit var title_page : String
-
+class SearchResults : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pages)
+        setContentView(R.layout.activity_search_results)
         supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setCustomView(R.layout.custom_titlebar)
 
+        titleView.text = "Search Results"
 
+        movie_name = intent.getStringExtra("search_query")
         val page = intent.getIntExtra("page",1)
-        search = intent.getStringExtra("search")!!
-        title_page = intent.getStringExtra("title")!!
+        Log.e("Main", movie_name)
 
-        titleView.text = title_page
+        if(movie_name == "NONE")
+            Toast.makeText(this,"No Search found",Toast.LENGTH_SHORT).show()
+        else
+            settingupcall(page)
 
-        settingupcall(page)
 
         forward.setOnClickListener{
-            val intent = Intent(this,Pages::class.java)
+            val intent = Intent(this,SearchResults::class.java)
             intent.putExtra("page", CURRENT_PAGE+1)
-            intent.putExtra("search", search)
-            intent.putExtra("title", title_page)
+            intent.putExtra("search_query", movie_name)
             this.startActivity(intent)
         }
 
         backward.setOnClickListener {
-            val intent = Intent(this,Pages::class.java)
+            val intent = Intent(this,SearchResults::class.java)
             intent.putExtra("page", CURRENT_PAGE-1)
-            intent.putExtra("search", search)
-            intent.putExtra("title", title_page)
+            intent.putExtra("search_query", movie_name)
             this.startActivity(intent)
         }
 
@@ -65,6 +61,7 @@ class Pages : AppCompatActivity() {
             val intent = Intent(this,MainActivity::class.java)
             this.startActivity(intent)
         }
+
     }
 
     private fun onFailure(t: Throwable) {
@@ -98,7 +95,7 @@ class Pages : AppCompatActivity() {
 
         recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(this@Pages)
+            layoutManager = LinearLayoutManager(this@SearchResults)
             adapter = MoviesAdapter(response.results, response.total_pages)
             (adapter as MoviesAdapter).notifyDataSetChanged()
             Log.e("Main", response.page.toString() + " " + response.total_pages.toString())
@@ -111,10 +108,9 @@ class Pages : AppCompatActivity() {
         Log.e("Main SettingCall Inside", page.toString())
         compositeDisposable.add(
             ServiceBuilder.buildService()
-                .getMovies(search,api_key, page)
+                .getSearchResults(api_key, movie_name!!, page)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe({response -> onResponse(response)}, {t -> onFailure(t) }))
     }
-
 }
